@@ -10,8 +10,7 @@ int main(int argc, char* argv[])
 {
     MPI_Init(NULL, NULL);   // Initialize the MPI environment
 
-    int my_rank; // Rank of process            
-    int my_size; // Number of processes
+    int my_rank, my_size; // Rank of process            
 
     MPI_Comm_rank(MPI_COMM_WORLD, &my_rank); // Get the rank of the process  
     MPI_Comm_size(MPI_COMM_WORLD, &my_size); // Get the number of processes           
