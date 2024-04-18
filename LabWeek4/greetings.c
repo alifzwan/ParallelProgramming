@@ -8,7 +8,7 @@
 
 int main(int argc, char* argv[]) 
 {
-    MPI_Init(NULL, NULL);   // Initialize the MPI environment
+    MPI_Init(NULL, NULL);   // Initialize MPI, in this case, we will note provide command line arguments
 
     int my_rank, my_size; // Rank of process            
 

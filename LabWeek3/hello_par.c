@@ -6,6 +6,9 @@
 // •	Given variable for MPI_Comm_rank is p
 // •	Given display for printf is “ Greetings from process __ and total number of processors is __. I am running on __”
 
+// argc - number of command line arguments passed into the program
+// argv[] - array of command line arguments passed into the program
+
 int main(int argc, char *argv[]) {
 
     int size, p, namelen; //number of processes, rank of the calling process in the communicator, length of the name
