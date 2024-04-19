@@ -6,6 +6,9 @@
 
 - MPI is a standardized and portable message-passing system designed to function on a wide variety of parallel computing architectures.
 
+## Table of Contents
+  - [Basic MPI Functions](#basic-mpi-functions)
+
 ## Basic MPI Functions
 ### MPI_Init()
 ```
