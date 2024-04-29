@@ -9,10 +9,11 @@
 
 int main(int argc, char* argv[]){
 
+
     int         my_rank, p, source, dest, tag=0;                                                 
     char        message[100];   
-
     MPI_Status  status;       // return status for  receive     
+    
     MPI_Init(&argc, &argv);   // Start up MPI 
     MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);      // Find out process rank  
     MPI_Comm_size(MPI_COMM_WORLD, &p);           // Find out number of processes 
