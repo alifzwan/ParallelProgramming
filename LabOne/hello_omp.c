@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main (int agrc, char *argv[])
-{
+int main (int agrc, char *argv[]){
     int nthreads, tid; //
 
     // Fork a team of threads giving them their own copies of variables
@@ -16,8 +15,7 @@ int main (int agrc, char *argv[])
 
 
         // Only master thread does this 
-        if (tid == 0)
-        {
+        if (tid == 0){
             nthreads = omp_get_num_threads();
             printf("Number of threads = %d\n", nthreads);
         }
