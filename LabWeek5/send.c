@@ -3,7 +3,7 @@
 
 int main(argc, argv) int argc; char *argv[];  {
 
-int numtasks, rank, dest, source, rc, count, tag=1;
+int numtasks, rank, dest, source, count, tag=1;
 char inmsg, outmsg='x';
 MPI_Status Status;
 
