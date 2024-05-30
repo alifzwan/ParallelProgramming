@@ -2,26 +2,32 @@
 #include <string.h>
 #include "mpi.h"
 
-// Refer to the greetings.c code, use MPI_Bcast instead of MPI_Send and Recv.
-
 int main(int argc, char* argv[]) {
-    int         my_rank, p, source, dest, tag = 0; // rank, number of processors, source, destination, tag 
-    char        message[100];  // storage for message  
+    int my_rank;        // rank of process 
+    int p;              // number of processes 
+    char message[100];  // storage for message 
+    
+    MPI_Init(&argc, &argv);                     // Start up MPI 
+    MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);    // Find out process rank 
+    MPI_Comm_size(MPI_COMM_WORLD, &p);          // Find out number of processes 
+    
+    if (my_rank == 0) {
+        for (int source = 1; source < p; source++) {
+            
+            sprintf(message, "Greetings from process %d!", source); // Root process (rank 0) initializes message for broadcasting
+            MPI_Bcast(message, 100, MPI_CHAR, 0, MPI_COMM_WORLD); // Root process broadcasts message to all processes
+            printf("Process 0 broadcasting: %s\n", message);
+        }
+    } else {
+        for (int i = 1; i < p; i++) {
+            // Non-root processes receive the broadcasted message
+            MPI_Bcast(message, 100, MPI_CHAR, 0, MPI_COMM_WORLD);
+            if (my_rank == i) {
+                printf("Process %d received: %s\n", my_rank, message);
+            }
+        }
+    }
 
-    MPI_Status status;        // return status for receive
-    MPI_Init(&argc, &argv);   // start up MPI
-    MPI_Comm_rank(MPI_COMM_WORLD, &my_rank); // find out process rank     
-    MPI_Comm_size(MPI_COMM_WORLD, &p);       // find out number of processes
-
-    if (my_rank != 0) { // if the rank of the current processor is not 0
-        sprintf(message, "Greetings from process %d!", my_rank); // print the rank of the current processor
-    } 
-
-    MPI_Bcast(message, strlen(message)+1, MPI_CHAR, 0, MPI_COMM_WORLD); // broadcast the message to all processors
-
-    if (my_rank == 0) { // if the rank of the current processor is 0
-        printf("Greetings from process 0: %s\n", message); // print the message
-    } 
-     
-    MPI_Finalize();
-} 
+    MPI_Finalize();    /* Shut down MPI */
+    return 0;
+}
