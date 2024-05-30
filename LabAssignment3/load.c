@@ -1,6 +1,12 @@
 #include <stdio.h> // import the standard input/output library
 #include <mpi.h> // import the MPI library
 
+// Objectives
+
+// • To practice with OpenMPI Collective Communication library.
+// • To familiarize with the Collective Communication pattern.
+
+
 int main(int argc, char **argv){
 
     // size - total number of processors
@@ -30,12 +36,14 @@ int main(int argc, char **argv){
 
     MPI_Reduce(&a, &sum, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD); // reduce the value of a to the sum of all processors
 
-    if(node == 0){ // if the rank of the current processor is 0
+    if(node == 0) { // if the rank of the current processor is 0
       printf("The sum 'a' from all proessors: %d\n", sum); // print the sum of all processors
     }
 
 
     t2 = MPI_Wtime(); // get the current time
+
     printf("Node %d  a = %d MPI_Wtime =  %1.6f\n", node, a, t2-t1); // print the rank of the current processor, the value of a, and the time taken to execute the program
+
     MPI_Finalize();
 }
