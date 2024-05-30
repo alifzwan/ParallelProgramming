@@ -1,6 +1,15 @@
 #include <stdio.h>
 #include <mpi.h>
 
+// Task 2
+
+// Refer to the bcast.c code:-
+
+// •	Write the code.
+// •	Successfully compiled your code.
+// •	Understand the output
+
+
 int main(int argc, char **argv){
     int size, node, i, x; // declare the variables size, node, i, x
     double MPI_Wtime (void); // declare the function MPI_Wtime 
@@ -13,7 +22,7 @@ int main(int argc, char **argv){
 
     if(node == 0){ // if the rank of the current processor is 0
         a = 20000*30000; // set the value of a to 20000*30000
-        printf("I am node %d and  a is %d \n", node, a); // print the rank of the current processor and the value of a
+        printf("I am node %d and a is %d \n", node, a); // print the rank of the current processor and the value of a
 
       //! We cannot put MPI_Bcast in the bracket of if(node == 0) because it will not be executed by other processors except 0 
       //? MPI_Bcast(&a, 1, MPI_INT, 0, MPI_COMM_WORLD);   
