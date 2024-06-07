@@ -6,6 +6,15 @@
 // • To practice with OpenMPI Collective Communication library.
 // • To familiarize with the Collective Communication pattern.
 
+// MPI_Reduce - This function applies a reduction operation(sum, max, min, etc.) 
+//              to all data from all processes and stores the result in root process.
+
+//            - For example, if each process has number and the operation is sum,
+//              MPI_Reduce will calculate the sum of all numbers and store it in the root process.
+
+
+// Process
+// - 
 
 int main(int argc, char **argv){
 
@@ -21,29 +30,28 @@ int main(int argc, char **argv){
     MPI_Comm_size(MPI_COMM_WORLD, &size); // get the total number of processors
     MPI_Comm_rank(MPI_COMM_WORLD, &node); // get the rank of the current processor
 
-    a = 0;
+    a = 0; 
     b = 1;
     t1 = MPI_Wtime(); // get the current time
-    x = 100000/size; // divide the number of iterations by the number of processors
+    x = 100000/size;  // divide the number of iterations by the number of processors,  
+//  x = 12500
 
     if (node < size) { // if the rank of the current processor is less than the total number of processors
-        for (i = 0; i < x; i++){  // iterate through the number of iterations
-            {  
-                a = a + b; // add the value of b to a
-            } 
+        for (i = 0; i < x; i++) {  // iterate through the number of iterations
+            a = a + b; // add the value of b to a
         }
     }
 
+    // Perform the reduction to sum all 'a' values at rank 0
     MPI_Reduce(&a, &sum, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD); // reduce the value of a to the sum of all processors
+
+    t2 = MPI_Wtime(); // get the current time
 
     if(node == 0) { // if the rank of the current processor is 0
       printf("The sum 'a' from all proessors: %d\n", sum); // print the sum of all processors
     }
 
-
-    t2 = MPI_Wtime(); // get the current time
-
-    printf("Node %d  a = %d MPI_Wtime =  %1.6f\n", node, a, t2-t1); // print the rank of the current processor, the value of a, and the time taken to execute the program
+    printf("Node %d  a = %d MPI_Wtime =  %1.6f\n", node, a, t2 - t1); // print the rank of the current processor, the value of a, and the time taken to execute the program
 
     MPI_Finalize();
 }
