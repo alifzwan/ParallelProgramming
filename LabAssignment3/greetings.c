@@ -2,32 +2,36 @@
 #include <string.h>
 #include "mpi.h"
 
+// Task 3
+
+// • Refer to the greetings.c code, use MPI_Bcast instead of MPI_Send and MPI_Recv.
+
+// MPI_Bcast - This function broadcasts a message from the process with
+//             rank root to all other processes in the communicator.
+//           - In other words, it sends same data from the root process to all other processes.
+
+
 int main(int argc, char* argv[]) {
-    int my_rank;        // rank of process 
-    int p;              // number of processes 
+    int my_rank, size;  // rank of process and number of processes 
     char message[100];  // storage for message 
     
     MPI_Init(&argc, &argv);                     // Start up MPI 
     MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);    // Find out process rank 
-    MPI_Comm_size(MPI_COMM_WORLD, &p);          // Find out number of processes 
+    MPI_Comm_size(MPI_COMM_WORLD, &size);          // Find out number of processes 
     
     if (my_rank == 0) {
-        for (int source = 1; source < p; source++) {
-            
-            sprintf(message, "Greetings from process %d!", source); // Root process (rank 0) initializes message for broadcasting
-            MPI_Bcast(message, 100, MPI_CHAR, 0, MPI_COMM_WORLD); // Root process broadcasts message to all processes
-            printf("Process 0 broadcasting: %s\n", message);
-        }
-    } else {
-        for (int i = 1; i < p; i++) {
-            // Non-root processes receive the broadcasted message
-            MPI_Bcast(message, 100, MPI_CHAR, 0, MPI_COMM_WORLD);
-            if (my_rank == i) {
-                printf("Process %d received: %s\n", my_rank, message);
-            }
-        }
+        // Root process prepares the message to broadcast
+        strcpy(message, "Greetings from process 0!");
+    } 
+
+    // Broadcast the message from root (process 0) to all other processes
+    MPI_Bcast(message, 100, MPI_CHAR, 0, MPI_COMM_WORLD); // Root process broadcasts message to all processes
+
+    // All processes print the message received from the root process
+    if (my_rank != 0) {
+        printf("Process %d received: %s\n", my_rank, message);
     }
 
-    MPI_Finalize();    /* Shut down MPI */
-    return 0;
+
+    MPI_Finalize();    // Shut down MPI 
 }
