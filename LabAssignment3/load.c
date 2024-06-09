@@ -1,20 +1,21 @@
 #include <stdio.h> // import the standard input/output library
 #include <mpi.h> // import the MPI library
 
-// Objectives
 
-// • To practice with OpenMPI Collective Communication library.
-// • To familiarize with the Collective Communication pattern.
+/* 
+MPI_Reduce  - This function applies a reduction operation(sum, max, min, etc.) 
+              to all data from all processes and stores the result in root process.
 
-// MPI_Reduce - This function applies a reduction operation(sum, max, min, etc.) 
-//              to all data from all processes and stores the result in root process.
-
-//            - For example, if each process has number and the operation is sum,
-//              MPI_Reduce will calculate the sum of all numbers and store it in the root process.
+            - For example, if each process has number and the operation is sum,
+              MPI_Reduce will calculate the sum of all numbers and store it in the root process.
+*/              
 
 
-// Process
-// - 
+
+// Task 1
+// • Refer to the load.c code, add MPI_Reduce to sum all values from all processors to rank 0.
+
+
 
 int main(int argc, char **argv){
 
