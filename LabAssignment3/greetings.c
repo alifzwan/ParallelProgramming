@@ -12,14 +12,14 @@
 
 
 int main(int argc, char* argv[]) {
-    int my_rank, size;  // rank of process and number of processes 
+    int node, size;  // rank of process and number of processes 
     char message[100];  // storage for message 
     
     MPI_Init(&argc, &argv);                     // Start up MPI 
-    MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);    // Find out process rank 
+    MPI_Comm_rank(MPI_COMM_WORLD, &node);    // Find out process rank 
     MPI_Comm_size(MPI_COMM_WORLD, &size);          // Find out number of processes 
     
-    if (my_rank == 0) {
+    if (node == 0) {
         // Root process prepares the message to broadcast
         strcpy(message, "Greetings from process 0!");
     } 
@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) {
     MPI_Bcast(message, 100, MPI_CHAR, 0, MPI_COMM_WORLD); // Root process broadcasts message to all processes
 
     // All processes print the message received from the root process
-    if (my_rank != 0) {
-        printf("Process %d received: %s\n", my_rank, message);
+    if (node != 0) {
+        printf("Process %d received: %s\n", node, message);
     }
 
 
