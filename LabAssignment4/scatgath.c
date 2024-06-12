@@ -30,14 +30,14 @@ int main(int argc, char *argv[])  {
     if (numtasks == SIZE) { // if number of processes is 4
 
         source = 1;         // set source to 1
-        sendcount = SIZE;  // set sendcount to 4
-        recvcount = SIZE;  // set recvcount to 4
+        sendcount = SIZE;   // set sendcount to 4
+        recvcount = SIZE;   // set recvcount to 4
 
         // Scatter the sendbuf array to recvbuf array
         MPI_Scatter(sendbuf, sendcount, MPI_FLOAT, recvbuf, recvcount, MPI_FLOAT, source, MPI_COMM_WORLD);
 
         // Print the rank and results of the recvbuf array
-        printf("rank= %d  Results: %f %f %f %f\n", rank, recvbuf[0], recvbuf[1], recvbuf[2], recvbuf[3]);
+        printf("rank = %d  Results: %f %f %f %f\n", rank, recvbuf[0], recvbuf[1], recvbuf[2], recvbuf[3]);
     } else {
         printf("Must specify %d processors. Terminating.\n", SIZE);
     }
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])  {
     // If number of processes is not SIZE, print error message and attempt to gather data
     if (numtasks != SIZE) {
         source = 1;
-        
+
         // Gather the recvbuf array to sendbuf array
         MPI_Gather(recvbuf, recvcount, MPI_FLOAT, sendbuf, sendcount, MPI_FLOAT, source, MPI_COMM_WORLD);
 
