@@ -39,9 +39,9 @@ int main() {
 
     // OpenMP parallel loop for calculating the sum of squares
     #pragma omp parallel for schedule(static) reduction(+:sum)// Static scheduling
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-          sum += sqrt(array[i][j]);
+    for (int i = 0; i < SIZE; i++) { 
+        for (int j = 0; j < SIZE; j++) { 
+          sum += sqrt(array[i][j]); // Calculate the square root of each element and add it to the sum
         }
     }
 
