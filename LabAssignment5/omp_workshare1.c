@@ -31,48 +31,33 @@ int main (int argc, char *argv[]) {
     chunk = CHUNKSIZE;
 
     int num_threads[] = {2, 4, 8, 16};
-    char *omp_proc_bind[] = {"true", "false"};
+    
+    double start_time = omp_get_wtime(); // get the start time
+    // parallel region
+    // shared: a, b, c, nthreads, chunk
+    // private: i, tid
+    #pragma omp parallel shared(a, b, c, nthreads, chunk) private(i, tid) 
+    {
+        tid = omp_get_thread_num(); // get the thread id
+        if (tid == 0) {
+            nthreads = omp_get_num_threads(); // get the number of threads
+            printf("Number of threads = %d\n", nthreads); // print the number of threads
+        }
+        printf("Thread %d starting...\n", tid);
 
-    for(int k =0; k < 2; k++) {
-        for(int t = 0; t < 4; t++) {
-            printf("Setting OMP_PROC_BIND to %s\n", omp_proc_bind[k]);
-            if(k == 0) {
-                omp_set_proc_bind(omp_proc_bind_true);
-            } else {
-                omp_set_proc_bind(omp_proc_bind_false);
+        #pragma omp for schedule(dynamic, chunk)
+        
+            for (i = 0; i < N; i++) {
+                c[i] = a[i] + b[i];
+                printf("Thread %d: c[%d]= %f\n", tid, i, c[i]);
             }
 
-            omp_set_num_threads(num_threads[t]);
-            printf("Using %d threads\n", num_threads[t]);
+        // ensure all threads have completed before proceeding    
+        #pragma omp barrier 
+    } 
+    double end_time = omp_get_wtime();
+    printf("Execution Time: %f seconds\n", end_time - start_time);
 
-            double start_time = omp_get_wtime(); // get the start time
-
-            // parallel region
-            // shared: a, b, c, nthreads, chunk
-            // private: i, tid
-            #pragma omp parallel shared(a, b, c, nthreads, chunk) private(i, tid) 
-            {
-                tid = omp_get_thread_num(); // get the thread id
-                if (tid == 0) {
-                    nthreads = omp_get_num_threads(); // get the number of threads
-                    printf("Number of threads = %d\n", nthreads); // print the number of threads
-                }
-                printf("Thread %d starting...\n", tid);
-
-                #pragma omp for schedule(dynamic, chunk)
-                
-                    for (i = 0; i < N; i++) {
-                        c[i] = a[i] + b[i];
-                        printf("Thread %d: c[%d]= %f\n", tid, i, c[i]);
-                    }
-
-                // ensure all threads have completed before proceeding    
-                #pragma omp barrier 
-            } 
-                double end_time = omp_get_wtime();
-                printf("Execution Time: %f seconds\n", end_time - start_time);
-        }
-    }
     return 0;
 }
 
@@ -102,11 +87,11 @@ int main (int argc, char *argv[]) {
 
 //* Reductions:
 // - Combine values from all threads into a single result
-// - Declared using 'reductin(+:sum)' to sum values across threads
+// - Declared using 'reduction(+:sum)' to sum values across threads
 
 //* Environment Variables:
 // - Used to control the execution of OpenMp programs
 //   For example:
-//      - OMP_NUM_THREADS: set the number of threads to use
-//      - OMP_SCHEDULE   : set the scheduling method to use
+//      - OMP_NUM_THREADS: set the number of threads to use 
+//      - OMP_PROC_BIND  : set the thread affinity 
 
