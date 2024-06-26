@@ -20,8 +20,8 @@ int main(int argc, char* argv[]) {
     MPI_Comm_size(MPI_COMM_WORLD, &size);          // Find out number of processes 
     
     if (node == 0) {
-        // Root process prepares the message to broadcast
-        strcpy(message, "Greetings from process 0!");
+       
+        strcpy(message, "Greetings from process 0!");  // Root process prepares the message to broadcast
     } 
 
     // Broadcast the message from root (process 0) to all other processes
