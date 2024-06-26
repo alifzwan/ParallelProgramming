@@ -10,11 +10,8 @@ MPI_Reduce  - This function applies a reduction operation(sum, max, min, etc.)
               MPI_Reduce will calculate the sum of all numbers and store it in the root process.
 */              
 
-
-
 // Task 1
 // • Refer to the load.c code, add MPI_Reduce to sum all values from all processors to rank 0.
-
 
 
 int main(int argc, char **argv){
@@ -54,7 +51,8 @@ int main(int argc, char **argv){
     if(node == 0) { // if the rank of the current processor is 0
       printf("The sum 'a' from all proessors: %d\n", sum); // print the sum of all processors
     } else {
-      printf("Node %d  a = %d MPI_Wtime =  %1.6f\n", node, a, t2 - t1); // print the rank of the current processor, the value of a, and the time taken to execute the program
+      // print the rank of the current processor, the value of a, and the time taken to execute the program
+      printf("Node %d  a = %d MPI_Wtime =  %1.6f\n", node, a, t2 - t1); 
     }
 
 
