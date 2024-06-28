@@ -25,10 +25,10 @@ int main (int argc, char *argv[]) {
     c[i] = d[i] = e[i] = f[i] = 0.0;
   }
   
-  for(int node = 2; node <= 16; node *= 2){
-    omp_set_num_threads(node);
+  for(int node = 2; node <= 16; node *= 2){ // Loop for number of threads from 2 to 16 (2, 4, 8, 16)
+    omp_set_num_threads(node); // Set number of threads
     start_time = omp_get_wtime(); // Start timing
-    #pragma omp parallel shared(a, b, c, d, nthreads) private(i, tid)
+    #pragma omp parallel shared(a, b, c, d, nthreads) private(i, tid) // Start parallel region
     {
 
         if (node == 0){
@@ -39,6 +39,7 @@ int main (int argc, char *argv[]) {
 
       #pragma omp sections nowait
       {
+        // sum
         #pragma omp section
         {
             printf("Thread %d doing section 1\n",node);
@@ -47,7 +48,7 @@ int main (int argc, char *argv[]) {
               printf("Thread %d: c[%d]= %f\n", node, i, c[i]);
             }
         }
-
+        // product
         #pragma omp section
         {
           printf("Thread %d doing section 2\n",node);
@@ -56,6 +57,7 @@ int main (int argc, char *argv[]) {
             printf("Thread %d: d[%d]= %f\n", node, i, d[i]);
           }
         }
+        // difference
         #pragma omp section
         {
           printf("Thread %d doing section 3\n", node);
@@ -64,7 +66,7 @@ int main (int argc, char *argv[]) {
             printf("Thread %d: e[%d]= %f\n", node, i, e[i]);
          }
         }
-
+        // division
         #pragma omp section
         {
           printf("Thread %d doing section 4\n", node);
