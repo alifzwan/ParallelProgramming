@@ -33,16 +33,14 @@ int main(int argc, char* argv[]) {
 
     // if the node is not 0
     if(node != 0) {
-        printf("Before Bcast:\n");
-        printf("I am node %d and a is %f\n", node, a); // print the value of a before Bcast
+        printf("Before Bcast, I am node %d and a is %f\n", node, a); // print the value of a before Bcast
     }
 
     MPI_Bcast(&a, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD); // broadcast the value of a to all nodes 
 
     // if the node is not 0
     if(node != 0) {
-        printf("After Bcast:\n");
-        printf("I am node %d and a is %f\n", node, a); // print the value of a after Bcast
+        printf("After  Bcast, I am node %d and a is %f\n", node, a); // print the value of a after Bcast
     }
 
     MPI_Finalize();
