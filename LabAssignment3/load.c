@@ -49,7 +49,7 @@ int main(int argc, char **argv){
 
    
     if(node == 0) { // if the rank of the current processor is 0
-      printf("The sum 'a' from all proessors: %d\n", sum); // print the sum of all processors
+      printf("The sum 'a' from all processors to Rank %d: %d\n",node, sum); // print the sum of all processors
     } else {
       // print the rank of the current processor, the value of a, and the time taken to execute the program
       printf("Node %d  a = %d MPI_Wtime =  %1.6f\n", node, a, t2 - t1); 
