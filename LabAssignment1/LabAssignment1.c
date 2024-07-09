@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank); // Get the rank of the process
     MPI_Comm_size(MPI_COMM_WORLD, &size); // Get the number of processes
 
-    if (size !=8) { // Must run on 8 processes
+    if (size != 8) { // Must run on 8 processes
         if (rank == 0) { 
             printf("This application is meant to be run with 8 processes.\n");
         }
